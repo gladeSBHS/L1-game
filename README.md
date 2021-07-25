@@ -1,1 +1,1 @@
-# L1-game
+# L1Game
