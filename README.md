@@ -48,6 +48,45 @@
             }
         }
 
+        function keyPressed(evt) {
+            console.log(evt.keyCode);
+            if (evt.keyCode == LEFT_KEY) {
+                RIGHT_KEY = true;
+            }
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == LEFT_KEY) {
+                RIGHT_KEY = false;
+            }
+        }
+
+        function keyPressed(evt) {
+            console.log(evt.keyCode);
+            if (evt.keyCode == UP_KEY) {
+                RIGHT_KEY = true;
+            }
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == UP_KEY) {
+                RIGHT_KEY = false;
+            }
+        }
+
+        function keyPressed(evt) {
+            console.log(evt.keyCode);
+            if (evt.keyCode == DOWN_KEY) {
+                RIGHT_KEY = true;
+            }
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == DOWN_KEY) {
+                RIGHT_KEY = false;
+            }
+        }
+
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
