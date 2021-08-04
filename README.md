@@ -25,67 +25,68 @@
 
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
-        const UP_KEY = 38;
-        const DOWN_KEY = 40;
+        const UP_KEY = 40;
+        const DOWN_KEY = 38;
+        var rightKeyPressed = false;
+        var leftKeyPressed = false;
+        var upKeyPressed = false;
+        var downKeyPressed = false;
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
             colorRect(playerXpos, playerYpos, SIZE, SIZE, 'red');
+            playermove();
         }
 
-
+        function playermove() { 
+            if (rightKeyPressed) {
+                playerXpos += playerXspeed;
+            }
+         
+            if (leftKeyPressed) {
+                playerXpos -= playerXspeed;
+            }
+         
+            if (upKeyPressed) {
+                playerYpos += playerYspeed;
+            }
+         
+            if (downKeyPressed) {
+                playerYpos -= playerYspeed;
+            }
+        }
+        
 
         function keyPressed(evt) {
-            console.log(evt.keyCode);
             if (evt.keyCode == RIGHT_KEY) {
-                RIGHT_KEY = true;
+                rightKeyPressed = true;
+            }
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = true;
+            }
+            if (evt.keyCode == UP_KEY) {
+                upKeyPressed = true;
+            }
+            if (evt.keyCode == DOWN_KEY) {
+                downKeyPressed = true;
             }
         }
 
         function keyReleased(evt) {
             if (evt.keyCode == RIGHT_KEY) {
-                RIGHT_KEY = false;
+                rightKeyPressed = false;
             }
-        }
-
-        function keyPressed(evt) {
-            console.log(evt.keyCode);
             if (evt.keyCode == LEFT_KEY) {
-                RIGHT_KEY = true;
+                leftKeyPressed = false;
             }
-        }
-
-        function keyReleased(evt) {
-            if (evt.keyCode == LEFT_KEY) {
-                RIGHT_KEY = false;
-            }
-        }
-
-        function keyPressed(evt) {
-            console.log(evt.keyCode);
             if (evt.keyCode == UP_KEY) {
-                RIGHT_KEY = true;
+                upKeyPressed = false;
             }
-        }
-
-        function keyReleased(evt) {
-            if (evt.keyCode == UP_KEY) {
-                RIGHT_KEY = false;
-            }
-        }
-
-        function keyPressed(evt) {
-            console.log(evt.keyCode);
             if (evt.keyCode == DOWN_KEY) {
-                RIGHT_KEY = true;
+                downKeyPressed = false;
             }
         }
 
-        function keyReleased(evt) {
-            if (evt.keyCode == DOWN_KEY) {
-                RIGHT_KEY = false;
-            }
-        }
 
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
