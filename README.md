@@ -22,7 +22,12 @@
         var playerYpos = 0;
         var playerXspeed = 5;
         var playerYspeed = 5;
-
+        
+        var enemyYspeed = 4
+        var enemyxspeed = 4
+        var enemyXpos = 0;
+        var enemyYpos = 0;
+        
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
         const UP_KEY = 40;
@@ -34,10 +39,16 @@
 
         function mainloop() {
             colorRect(0, 0, canvas.width, canvas.height, 'black');
-            colorRect(playerXpos, playerYpos, SIZE, SIZE, 'red');
-            playermove();
+            colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
+            colorRect(enemyXpos, enemyYpos, SIZE, SIZE, 'red');
+            playermove();enemymove();
         }
 
+        function enemymove() {
+            enemyXpos += enemyXspeed;
+            
+            
+        }
         function playermove() { 
             if (rightKeyPressed) {
                 playerXpos += playerXspeed;
