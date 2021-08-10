@@ -22,16 +22,17 @@
         var playerYpos = 0;
         var playerXspeed = 5;
         var playerYspeed = 5;
-        
+
         var enemyYspeed = 4
-        var enemyxspeed = 4
+        var enemyXspeed = 4
         var enemyXpos = 0;
         var enemyYpos = 0;
-        
+
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
         const UP_KEY = 40;
         const DOWN_KEY = 38;
+        
         var rightKeyPressed = false;
         var leftKeyPressed = false;
         var upKeyPressed = false;
@@ -41,32 +42,33 @@
             colorRect(0, 0, canvas.width, canvas.height, 'black');
             colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
             colorRect(enemyXpos, enemyYpos, SIZE, SIZE, 'red');
-            playermove();enemymove();
+            playermove();
+            enemymove();
         }
 
         function enemymove() {
             enemyXpos += enemyXspeed;
-            
-            
+
         }
-        function playermove() { 
+
+        function playermove() {
             if (rightKeyPressed) {
                 playerXpos += playerXspeed;
             }
-         
+
             if (leftKeyPressed) {
                 playerXpos -= playerXspeed;
             }
-         
+
             if (upKeyPressed) {
                 playerYpos += playerYspeed;
             }
-         
+
             if (downKeyPressed) {
                 playerYpos -= playerYspeed;
             }
         }
-        
+
 
         function keyPressed(evt) {
             if (evt.keyCode == RIGHT_KEY) {
@@ -106,3 +108,4 @@
 
     </script>
 </body>
+
