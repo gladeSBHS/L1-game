@@ -45,7 +45,7 @@
             playermove();
             enemymove();
             if (starting) {
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < 5; i++) {
                     makeEnemy();
                 }
                 starting = false;
@@ -60,20 +60,22 @@
 
         function enemymove() {
             enemies.forEach(function(e, i, array) {
-                e.enemyXpos += e.enemyXspeed;
-                if (e.enemyXpos > canvas.height) {
-                    e.enemyXpos = 0;
-                    e.enemyXspeed = Math.floor(Math.random() * (15 - 5) + 5);
-                }
+                e.enemyYpos += e.enemyYspeed;
+                if (e.enemyYpos > canvas.height) {
+                    e.enemyYpos = 0 -  e.ENEMY_SIZE;
+                    e.enemyXpos = Math.floor(Math.random() * (canvas.width - e.ENEMY_SIZE));
+                    e.enemyYspeed = Math.floor(Math.random() * (12 - 4) + 4);
+               }
             });
+            
         }
 
         function makeEnemy() {
             var ENEMY_SIZE = 20;
-            var enemyYspeed = 0;
-            var enemyXspeed = Math.floor(Math.random() * (canvas.width - SIZE));
-            var enemyXpos = 0;
-            var enemyYpos = Math.floor(Math.random() * (canvas.width - SIZE));
+            var enemyYspeed = Math.floor(Math.random() * (12 - 3)+3);;
+            var enemyXspeed = 0;
+            var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
+            var enemyYpos = 0 - ENEMY_SIZE;
 
 
             var enemy = {
