@@ -15,11 +15,11 @@
             setInterval(mainloop, 1000 / 50);
 
         }
-
-
+        var score = 0; 
+        var deaths = 0;
         var SIZE = 20;
         var playerXpos = 0;
-        var playerYpos = 580;
+        var playerYpos = 0;
         var playerXspeed = 5;
         var playerYspeed = 5;
 
@@ -45,7 +45,7 @@
             playermove();
             enemymove();
             if (starting) {
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < 1; i++) {
                     makeEnemy();
                 }
                 starting = false;
@@ -62,17 +62,28 @@
             enemies.forEach(function(e, i, array) {
                 e.enemyYpos += e.enemyYspeed;
                 if (e.enemyYpos > canvas.height) {
-                    e.enemyYpos = 0 -  e.ENEMY_SIZE;
+                    e.enemyYpos = 0 - e.ENEMY_SIZE;
                     e.enemyXpos = Math.floor(Math.random() * (canvas.width - e.ENEMY_SIZE));
                     e.enemyYspeed = Math.floor(Math.random() * (12 - 4) + 4);
-               }
+                }
+                if (e.enemyYpos + e.ENEMY_SIZE > playerYpos && e.enemyYpos < playerYpos + SIZE && e.enemyXpos + e.ENEMY_SIZE > playerXpos && e.enemyXpos < playerXpos + SIZE) {
+                    playerXpos = 0;
+                    playerYpos = canvas.height - SIZE;
+                    deaths++;
+                    console.log('deaths:' + deaths);
+                }
+                if(playerXpos + SIZE > canvas.width){
+                playerXpos = 0;
+                playerYpos = canvas.height - SIZE;
+                score++;
+                console.log('score:' + score);
+                }
             });
-            
         }
 
         function makeEnemy() {
             var ENEMY_SIZE = 20;
-            var enemyYspeed = Math.floor(Math.random() * (12 - 3)+3);;
+            var enemyYspeed = Math.floor(Math.random() * (12 - 3) + 3);
             var enemyXspeed = 0;
             var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
             var enemyYpos = 0 - ENEMY_SIZE;
