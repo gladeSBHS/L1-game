@@ -17,17 +17,18 @@
         }
         var score = 0; 
         var deaths = 0;
+        
         var SIZE = 20;
         var playerXpos = 0;
-        var playerYpos = 0;
+        var playerYpos = Math.floor(Math.random() * (playerXpos + SIZE));
         var playerXspeed = 5;
         var playerYspeed = 5;
 
 
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
-        const UP_KEY = 40;
-        const DOWN_KEY = 38;
+        const UP_KEY = 38;
+        const DOWN_KEY = 40;
 
         var rightKeyPressed = false;
         var leftKeyPressed = false;
@@ -63,7 +64,7 @@
                 e.enemyYpos += e.enemyYspeed;
                 if (e.enemyYpos > canvas.height) {
                     e.enemyYpos = 0 - e.ENEMY_SIZE;
-                    e.enemyXpos = Math.floor(Math.random() * (canvas.width - e.ENEMY_SIZE));
+                    e.enemyXpos = Math.floor(Math.random() * (canvas.width - e.ENEMY_SIZE) + e.ENEMY_SIZE);
                     e.enemyYspeed = Math.floor(Math.random() * (12 - 4) + 4);
                 }
                 if (e.enemyYpos + e.ENEMY_SIZE > playerYpos && e.enemyYpos < playerYpos + SIZE && e.enemyXpos + e.ENEMY_SIZE > playerXpos && e.enemyXpos < playerXpos + SIZE) {
@@ -72,12 +73,12 @@
                     deaths++;
                     console.log('deaths:' + deaths);
                 }
-                if(playerXpos + SIZE > canvas.width){
-                playerXpos = 0;
-                playerYpos = canvas.height - SIZE;
-                score++;
-                console.log('score:' + score);
+                
+                if(playerYpos + SIZE > canvas.height){
+                   playerYpos = 580;
                 }
+                
+                
             });
         }
 
@@ -85,7 +86,7 @@
             var ENEMY_SIZE = 20;
             var enemyYspeed = Math.floor(Math.random() * (12 - 3) + 3);
             var enemyXspeed = 0;
-            var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE));
+            var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE) + ENEMY_SIZE);
             var enemyYpos = 0 - ENEMY_SIZE;
 
 
@@ -102,18 +103,25 @@
         function playermove() {
             if (rightKeyPressed) {
                 playerXpos += playerXspeed;
+                if(playerXpos + SIZE > canvas.width){
+                    playerXpos = 0;
+                    playerYpos = canvas.height - SIZE;
+                    score++;
+                    console.log('score:' + score);
+                }
             }
 
-            if (leftKeyPressed) {
+            if (leftKeyPressed && playerXpos > 0) {
                 playerXpos -= playerXspeed;
             }
 
-            if (upKeyPressed) {
-                playerYpos += playerYspeed;
+            if (upKeyPressed && playerYpos >= 0) {
+                playerYpos -= playerYspeed;
+                console.log('ahh')
             }
 
-            if (downKeyPressed) {
-                playerYpos -= playerYspeed;
+            if (downKeyPressed && playerYpos + SIZE <= canvas.height) {
+                playerYpos += playerYspeed;
             }
         }
 
