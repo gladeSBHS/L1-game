@@ -15,6 +15,33 @@
             setInterval(mainloop, 1000 / 50);
 
         }
+        var difficulty = '';
+        var pass = false;
+        while(pass == false){//until happy no exit loop
+            difficulty = prompt('how hard do you want the game to be?','easy');
+               difficulty = difficulty.toLowerCase();
+           if(difficulty == 'easy' || difficulty == 'medium' || difficulty == 'hard'){
+               pass = true;
+           }
+        }
+        
+        var enemyCount = 0;
+        if(difficulty == 'easy'){
+            enemyCount = 5;
+        }
+        if(difficulty == 'medium'){
+            enemyCount = 8;
+        
+        }
+        if(difficulty == 'hard'){
+            enemyCount = 12;
+        
+        }
+        var username = '';
+        while(username == '' || username == null){
+            username = prompt('whats your username?')//fred
+        }
+
         var score = 0; 
         var deaths = 0;
         
@@ -24,7 +51,7 @@
         var playerXspeed = 5;
         var playerYspeed = 5;
 
-
+//keycode consts
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
         const UP_KEY = 38;
@@ -37,22 +64,26 @@
 
         var enemies = [];
         var starting = true;
+        
+       var gamerun = true;
 
         function mainloop() {
+            if (gamerun){
             colorRect(0, 0, canvas.width, canvas.height, 'black');
             colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
+            }else colorRect(0,0,canvas.width,canvas.height,'red');
 
             enemydraw();
             playermove();
             enemymove();
             if (starting) {
-                for (var i = 0; i < 1; i++) {
+                for (var i = 0; i < enemyCount; i++) {
                     makeEnemy();
                 }
                 starting = false;
             }
         }
-
+          
         function enemydraw() {
             enemies.forEach(function(e, i, array) {
                 colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'red');
@@ -72,13 +103,7 @@
                     playerYpos = canvas.height - SIZE;
                     deaths++;
                     console.log('deaths:' + deaths);
-                }
-                
-                if(playerYpos + SIZE > canvas.height){
-                   playerYpos = 580;
-                }
-                
-                
+                } 
             });
         }
 
@@ -89,7 +114,7 @@
             var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE) + ENEMY_SIZE);
             var enemyYpos = 0 - ENEMY_SIZE;
 
-
+//enermy vars
             var enemy = {
                 ENEMY_SIZE: ENEMY_SIZE,
                 enemyXpos: enemyXpos,
@@ -117,7 +142,7 @@
 
             if (upKeyPressed && playerYpos >= 0) {
                 playerYpos -= playerYspeed;
-                console.log('ahh')
+                
             }
 
             if (downKeyPressed && playerYpos + SIZE <= canvas.height) {
