@@ -1,7 +1,7 @@
 <!doctype html>
 
 <body>
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <canvas id="gameCanvas" width='600' height='600'></canvas>
     <script>
         var canvas, canvasContext;
 
@@ -12,46 +12,46 @@
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
 
-            setInterval(mainloop, 1000 / 50);
+            setInterval(mainloop, 1000 / 60);
 
         }
         var difficulty = '';
         var pass = false;
-        while(pass == false){//until happy no exit loop
-            difficulty = prompt('how hard do you want the game to be?','easy');
-               difficulty = difficulty.toLowerCase();
-           if(difficulty == 'easy' || difficulty == 'medium' || difficulty == 'hard'){
-               pass = true;
-           }
-        }
-        
-        var enemyCount = 0;
-        if(difficulty == 'easy'){
-            enemyCount = 5;
-        }
-        if(difficulty == 'medium'){
-            enemyCount = 8;
-        
-        }
-        if(difficulty == 'hard'){
-            enemyCount = 12;
-        
-        }
-        var username = '';
-        while(username == '' || username == null){
-            username = prompt('whats your username?')//fred
+        while (pass == false) { //until happy no exit loop
+            difficulty = prompt('how hard do you want the game to be?', 'easy');
+            difficulty = difficulty.toLowerCase();
+            if (difficulty == 'easy' || difficulty == 'medium' || difficulty == 'hard') {
+                pass = true;
+            }
         }
 
-        var score = 0; 
+        var enemyCount = 0;
+        if (difficulty == 'easy') {
+            enemyCount = 5;
+        }
+        if (difficulty == 'medium') {
+            enemyCount = 8;
+
+        }
+        if (difficulty == 'hard') {
+            enemyCount = 12;
+
+        }
+        var username = '';
+        while (username == '' || username == null) {
+            username = prompt('whats your username?') //fred
+        }
+
+        var score = 0;
         var deaths = 0;
-        
+
         var SIZE = 20;
         var playerXpos = 0;
         var playerYpos = Math.floor(Math.random() * (playerXpos + SIZE));
         var playerXspeed = 5;
         var playerYspeed = 5;
 
-//keycode consts
+        //keycode consts
         const LEFT_KEY = 37;
         const RIGHT_KEY = 39;
         const UP_KEY = 38;
@@ -64,26 +64,28 @@
 
         var enemies = [];
         var starting = true;
-        
-       var gamerun = true;
+
+        var GameRun = true;
 
         function mainloop() {
-            if (gamerun){
-            colorRect(0, 0, canvas.width, canvas.height, 'black');
-            colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
-            }else colorRect(0,0,canvas.width,canvas.height,'red');
+            if(GameRun){
+                colorRect(0, 0, canvas.width, canvas.height, 'black');
+                colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
 
-            enemydraw();
-            playermove();
-            enemymove();
-            if (starting) {
-                for (var i = 0; i < enemyCount; i++) {
-                    makeEnemy();
+                enemydraw();
+                playermove();
+                enemymove();
+                if (starting) {
+                    for (var i = 0; i < enemyCount; i++) {
+                        makeEnemy();
+                    }
+                    starting = false;
                 }
-                starting = false;
+            } else {
+                colorRect(0, 0, canvas.width, canvas.height, 'red');  
             }
         }
-          
+
         function enemydraw() {
             enemies.forEach(function(e, i, array) {
                 colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'red');
@@ -103,7 +105,12 @@
                     playerYpos = canvas.height - SIZE;
                     deaths++;
                     console.log('deaths:' + deaths);
-                } 
+                    if(deaths >= 3){
+                       GameRun = false;
+                       
+                       }
+                      
+                }
             });
         }
 
@@ -114,7 +121,7 @@
             var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE) + ENEMY_SIZE);
             var enemyYpos = 0 - ENEMY_SIZE;
 
-//enermy vars
+            //enermy vars
             var enemy = {
                 ENEMY_SIZE: ENEMY_SIZE,
                 enemyXpos: enemyXpos,
@@ -128,7 +135,7 @@
         function playermove() {
             if (rightKeyPressed) {
                 playerXpos += playerXspeed;
-                if(playerXpos + SIZE > canvas.width){
+                if (playerXpos + SIZE > canvas.width) {
                     playerXpos = 0;
                     playerYpos = canvas.height - SIZE;
                     score++;
@@ -142,7 +149,7 @@
 
             if (upKeyPressed && playerYpos >= 0) {
                 playerYpos -= playerYspeed;
-                
+
             }
 
             if (downKeyPressed && playerYpos + SIZE <= canvas.height) {
