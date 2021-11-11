@@ -9,6 +9,10 @@
             canvas = document.getElementById('gameCanvas');
             canvasContext = canvas.getContext('2d');
 
+            canvasContext.font = '40pt Calibri';
+            canvasContext.fillStyle = 'blue';
+            canvasContext.fillText('GAME OVER YOUR SCORE WAS ', 150, 100);
+
             document.addEventListener('keydown', keyPressed);
             document.addEventListener('keyup', keyReleased);
 
@@ -49,7 +53,7 @@
         var playerXpos = 0;
         var playerYpos = Math.floor(Math.random() * (playerXpos + SIZE));
         var playerXspeed = 5;
-        var playerYspeed = 5;
+        var playerYspeed = 5; //
 
         //keycode consts
         const LEFT_KEY = 37;
@@ -68,29 +72,31 @@
         var GameRun = true;
 
         function mainloop() {
-            if(GameRun){
+            if (GameRun) {
                 colorRect(0, 0, canvas.width, canvas.height, 'black');
                 colorRect(playerXpos, playerYpos, SIZE, SIZE, 'blue');
+                colorText('score:' + score, 50,50,"30px Arial",'white');
 
                 enemydraw();
-                playermove();
+                playerMove();
                 enemymove();
                 if (starting) {
                     for (var i = 0; i < enemyCount; i++) {
-                        makeEnemy();
+                        makeEnemys();
                     }
                     starting = false;
                 }
             } else {
-                colorRect(0, 0, canvas.width, canvas.height, 'red');  
+                colorRect(0, 0, canvas.width, canvas.height, 'red');
+                colorText(username+ ' your score was ' + score, 50,50,"30px Arial",'black');
             }
-        }
+        } //end of mianloop function
 
         function enemydraw() {
             enemies.forEach(function(e, i, array) {
                 colorRect(e.enemyXpos, e.enemyYpos, e.ENEMY_SIZE, e.ENEMY_SIZE, 'red');
             });
-        }
+        } //end of enemydraw function
 
         function enemymove() {
             enemies.forEach(function(e, i, array) {
@@ -98,30 +104,28 @@
                 if (e.enemyYpos > canvas.height) {
                     e.enemyYpos = 0 - e.ENEMY_SIZE;
                     e.enemyXpos = Math.floor(Math.random() * (canvas.width - e.ENEMY_SIZE) + e.ENEMY_SIZE);
-                    e.enemyYspeed = Math.floor(Math.random() * (12 - 4) + 4);
+                    e.enemyYspeed = Math.floor(Math.random() * (12 - 4) + 4); // spawns enemy with a random speed at a random place on the top of the canvas 
                 }
                 if (e.enemyYpos + e.ENEMY_SIZE > playerYpos && e.enemyYpos < playerYpos + SIZE && e.enemyXpos + e.ENEMY_SIZE > playerXpos && e.enemyXpos < playerXpos + SIZE) {
                     playerXpos = 0;
                     playerYpos = canvas.height - SIZE;
                     deaths++;
                     console.log('deaths:' + deaths);
-                    if(deaths >= 3){
-                       GameRun = false;
-                       
-                       }
-                      
+                    if (deaths >= 3) {
+                        GameRun = false; 
+                        // adds deaths in console when player touches enemy and when you get 3 deaths the lose screen pops up
+                    }
                 }
             });
-        }
+        } //end of enemymove function
 
-        function makeEnemy() {
+        function makeEnemys() {
             var ENEMY_SIZE = 20;
             var enemyYspeed = Math.floor(Math.random() * (12 - 3) + 3);
             var enemyXspeed = 0;
             var enemyXpos = Math.floor(Math.random() * (canvas.width - ENEMY_SIZE) + ENEMY_SIZE);
             var enemyYpos = 0 - ENEMY_SIZE;
 
-            //enermy vars
             var enemy = {
                 ENEMY_SIZE: ENEMY_SIZE,
                 enemyXpos: enemyXpos,
@@ -130,16 +134,16 @@
                 enemyYspeed: enemyYspeed,
             }
             enemies.push(enemy);
-        }
+        } // end of makeEnemys function
 
-        function playermove() {
+        function playerMove() {
             if (rightKeyPressed) {
                 playerXpos += playerXspeed;
                 if (playerXpos + SIZE > canvas.width) {
                     playerXpos = 0;
                     playerYpos = canvas.height - SIZE;
                     score++;
-                    console.log('score:' + score);
+                    console.log('score:' + score); // adds score in console when player leaves the right side of the canvas
                 }
             }
 
@@ -155,7 +159,7 @@
             if (downKeyPressed && playerYpos + SIZE <= canvas.height) {
                 playerYpos += playerYspeed;
             }
-        }
+        } //end of playerMove function
 
 
         function keyPressed(evt) {
@@ -171,7 +175,7 @@
             if (evt.keyCode == DOWN_KEY) {
                 downKeyPressed = true;
             }
-        }
+        } //enf of keyPressed function
 
         function keyReleased(evt) {
             if (evt.keyCode == RIGHT_KEY) {
@@ -186,13 +190,17 @@
             if (evt.keyCode == DOWN_KEY) {
                 downKeyPressed = false;
             }
-        }
-
-
+        } //end of keyReleased function
         function colorRect(x, y, w, h, c) {
             canvasContext.fillStyle = c;
             canvasContext.fillRect(x, y, w, h);
-        }
+        } //end of colorRect
+        
+        function colorText(msg, x, y, f, c) {
+            canvasContext.font = f;
+            canvasContext.fillStyle = c;
+            canvasContext.fillText(msg, x, y);
+        } //end of colorRect
 
     </script>
 </body>
